@@ -1,52 +1,31 @@
 <script setup lang="ts">
 const nuxtApp = useNuxtApp()
-const { activeHeadings, updateHeadings } = useScrollspy()
 
-const links = computed(() => [{
-  label: 'Features',
-  to: '#features',
-  icon: 'i-heroicons-cube-transparent',
-  active: activeHeadings.value.includes('features') && !activeHeadings.value.includes('pricing')
+const links = computed(() => [ {
+  label: '首页',
+  to: '/',
+  icon: 'i-heroicons-credit-card'
 }, {
-  label: 'Pricing',
-  to: '#pricing',
-  icon: 'i-heroicons-credit-card',
-  active: activeHeadings.value.includes('pricing') && !activeHeadings.value.includes('testimonials')
+  label: '精彩人生',
+  to: '/my-logs',
+  icon: 'i-heroicons-academic-cap'
 }, {
-  label: 'Testimonials',
-  to: '#testimonials',
-  icon: 'i-heroicons-academic-cap',
-  active: activeHeadings.value.includes('testimonials')
-}, {
-  label: 'FAQ',
-  to: '#faq',
-  icon: 'i-heroicons-question-mark-circle',
-  active: activeHeadings.value.includes('faq')
+  label: '关于网站',
+  to: '/faq',
+  icon: 'i-heroicons-question-mark-circle'
 }])
 
-nuxtApp.hooks.hookOnce('page:finish', () => {
-  updateHeadings([
-    document.querySelector('#features'),
-    document.querySelector('#pricing'),
-    document.querySelector('#testimonials'),
-    document.querySelector('#faq')
-  ])
-})
 </script>
 
 <template>
   <UHeader :links="links">
     <template #logo>
-      Nuxt UI Pro <UBadge
-        label="Landing"
-        variant="subtle"
-        class="mb-0.5"
-      />
+      我们的故事
     </template>
 
     <template #right>
       <UButton
-        label="Sign in"
+        label="登录"
         color="white"
         variant="ghost"
         trailing-icon="i-heroicons-arrow-right-20-solid"
