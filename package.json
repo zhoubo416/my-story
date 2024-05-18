@@ -24,6 +24,7 @@
     "multer": "1.4.5-lts.1",
     "nuxt": "^3.11.2",
     "v-calendar": "^3.1.2",
+    "vue-toastification": "2.0.0-rc.5",
     "vue-upload-component": "^3.1.15"
   },
   "devDependencies": {

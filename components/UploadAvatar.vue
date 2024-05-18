@@ -5,7 +5,7 @@
       size="sm"
       icon="i-heroiconsphoto"
       @change="onFileChange"
-    />
+    >
     <UButton
       color="primary"
       variant="solid"
@@ -19,6 +19,9 @@
 
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue'
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -33,7 +36,7 @@ const onFileChange = (event: Event) => {
 
 const uploadAvatar = async () => {
   if (!file.value) {
-    alert('请先选择一个文件')
+    toast.info('请先选择一个文件')
     return
   }
 
@@ -51,12 +54,11 @@ const uploadAvatar = async () => {
     }
 
     const data = await response.json()
-    alert('上传成功')
-    console.log('File URL:', data.url)
+    toast.success('上传成功')
     emit('update:modelValue', data.url)
   } catch (error) {
     console.error(error)
-    alert('上传失败')
+    toast.error('上传失败')
   }
 }
 </script>

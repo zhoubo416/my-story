@@ -1,4 +1,17 @@
 <script setup lang="ts">
+import { createApp } from 'vue'
+import type { PluginOptions } from 'vue-toastification'
+import Toast from 'vue-toastification'
+// Import the CSS or use your own!
+import 'vue-toastification/dist/index.css'
+
+const app = createApp()
+
+const options: PluginOptions = {
+  // You can set your default options here
+}
+
+app.use(Toast, options)
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
