@@ -8,7 +8,7 @@ const log = {
   date: ref(new Date())
 }
 const hero = ref({
-  avatar: null,
+  avatar: 'https://avatars.githubusercontent.com/u/739984?v=4',
   name: '',
   description: '',
   logs: []
@@ -32,9 +32,10 @@ const alert = (msg) => {
       <UPageHeader headline="个人主页">
         <template #title>
           <UAvatar
-            src="https://avatars.githubusercontent.com/u/739984?v=4"
+            :src="hero.avatar"
             alt="Avatar"
           />
+          <UploadAvatar v-model="hero.avatar" />
           <UploadButton
             :config="{
               endpoint: 'videoAndImage',
