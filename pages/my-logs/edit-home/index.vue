@@ -8,7 +8,7 @@ const log = {
   date: ref(new Date())
 }
 const hero = ref({
-  avatar: 'https://avatars.githubusercontent.com/u/739984?v=4',
+  avatar: '/images/user.jpg',
   name: '',
   description: '',
   logs: []
@@ -21,8 +21,9 @@ const formatDate = (v) => {
   return format(v, 'd MMM, yyy')
 }
 
-const alert = (msg) => {
-  window.alert(msg)
+const isOpen = ref(false)
+const goUploadAvatar = () => {
+  isOpen.value = true
 }
 </script>
 
@@ -31,26 +32,27 @@ const alert = (msg) => {
     <div>
       <UPageHeader headline="个人主页">
         <template #title>
-          <UAvatar
-            :src="hero.avatar"
-            alt="Avatar"
-          />
-          <UploadAvatar v-model="hero.avatar" />
-          <UploadButton
-            :config="{
-              endpoint: 'videoAndImage',
-              onClientUploadComplete: (res) => {
-                console.log(`onClientUploadComplete`, res);
-                alert('Upload Completed');
-              },
-              onUploadBegin: () => {
-                console.log(`onUploadBegin`);
-              }
-            }"
-          />
+          <div
+            @click="goUploadAvatar"
+          >
+            <UAvatar
+              :src="hero.avatar"
+              alt="Avatar"
+            />
+            <UIcon
+              class="text-xs text-primary"
+              name="i-heroicons-pencil-square"
+            />
+          </div>
+          <UModal v-model="isOpen">
+            <div class="p-4">
+              <upload-file v-model="hero.avatar" />
+            </div>
+          </UModal>
+
           <UInput
             v-model="hero.name"
-            placeholder="你的名字..."
+            placeholder="我的名字..."
           />
         </template>
         <template #description>
@@ -59,7 +61,7 @@ const alert = (msg) => {
             variant="none"
             autoresize
             resize
-            placeholder="介绍一下你自己..."
+            placeholder="我是谁..."
           />
         </template>
       </UPageHeader>
@@ -74,7 +76,7 @@ const alert = (msg) => {
           <UInput
             v-model="item.title"
             variant="none"
-            placeholder="这件事情..."
+            placeholder="有件事情..."
           />
         </template>
         <template #description>
@@ -83,7 +85,7 @@ const alert = (msg) => {
             variant="none"
             autoresize
             resize
-            placeholder="这件事情的详细情况..."
+            placeholder="我想记下..."
           />
         </template>
 

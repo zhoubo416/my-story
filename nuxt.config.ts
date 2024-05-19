@@ -1,9 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
-  modules: ['@nuxt/content', '@nuxt/eslint', '@nuxt/ui', '@nuxt/fonts', "@nuxt/image"],
+  modules: ['@nuxt/content', '@nuxt/eslint', '@nuxt/ui', '@nuxt/fonts', '@nuxt/image', 'nuxt-file-storage'],
   ui: {
-    icons: ['heroicons', 'simple-icons','mi']
+    icons: ['heroicons', 'simple-icons', 'mi']
   },
   devtools: {
     enabled: true

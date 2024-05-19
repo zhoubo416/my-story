@@ -55,6 +55,9 @@ devDependencies:
   eslint:
     specifier: ^9.1.1
     version: 9.3.0
+  nuxt-file-storage:
+    specifier: ^0.2.2
+    version: 0.2.2
   vue-tsc:
     specifier: ^2.0.14
     version: 2.0.19(typescript@5.4.5)
@@ -7332,6 +7335,16 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.3
+
+  /nuxt-file-storage@0.2.2:
+    resolution: {integrity: sha512-VBRwNN3HeaKtmOyZNeHQowJGqc1kzqEZsxx4R1erVb+IcCWi0aFwYWz3OcqCYj0ipS9JaSet0z2KpE4T3Fa+5w==}
+    dependencies:
+      '@nuxt/kit': 3.11.2
+      defu: 6.1.4
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+    dev: true
 
   /nuxt-icon@0.6.10(nuxt@3.11.2)(vite@5.2.11)(vue@3.4.27):
     resolution: {integrity: sha512-S9zHVA66ox4ZSpMWvCjqKZC4ZogC0s2z3vZs+M4D95YXGPEXwxDZu+insMKvkbe8+k7gvEmtTk0eq3KusKlxiw==}

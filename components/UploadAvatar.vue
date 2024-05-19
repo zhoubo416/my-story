@@ -3,7 +3,7 @@
     <input
       type="file"
       size="sm"
-      icon="i-heroiconsphoto"
+      icon="i-heroicons-photo"
       @change="onFileChange"
     >
     <UButton
