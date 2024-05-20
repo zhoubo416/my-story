@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { format } from 'date-fns'
 
 const log = {
@@ -25,6 +25,14 @@ const isOpen = ref(false)
 const goUploadAvatar = () => {
   isOpen.value = true
 }
+onMounted(async () => {
+  try {
+    const { data } = await useFetch('/api/user-info')
+    console.log(data, 'data');
+  } catch (err) {
+    // error.value = 'An error occurred while fetching data.'
+  }
+})
 </script>
 
 <template>

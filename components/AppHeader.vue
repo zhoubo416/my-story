@@ -23,16 +23,6 @@ const links = computed(() => [ {
       我们的故事
     </template>
 
-    <template #right>
-      <UButton
-        label="登录"
-        color="white"
-        variant="ghost"
-        trailing-icon="i-heroicons-arrow-right-20-solid"
-        class="hidden lg:flex"
-      />
-    </template>
-
     <template #panel>
       <UAsideLinks :links="links" />
 
