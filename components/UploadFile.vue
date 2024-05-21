@@ -30,7 +30,6 @@
       >
         <input
           id="file-input"
-          :ref="fileInput"
           type="file"
           accept=".jpg, .jpeg, .png"
           name="files[]"
@@ -54,10 +53,9 @@ import { useToast } from 'vue-toastification'
 
 const toast = useToast()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'update:isOpen'])
 const { handleFileInput, files } = useFileStorage()
 
-const fileInput = ref<HTMLInputElement>()
 const fileObj = ref<File | null>(null)
 
 const maxFileSize = 2 * 1024 * 500 // 500k
@@ -78,7 +76,6 @@ const handleDrop = (e: any) => {
 const fileLinks = ref<string[]>([])
 
 const submit = async () => {
-  console.log(handleFileInput, files, 'handleFileInput, files')
   if (!files.value?.length) {
     toast.info('请先选择一个文件')
     return
@@ -99,6 +96,7 @@ const submit = async () => {
     const data = await response.json()
     toast.success('上传成功')
     emit('update:modelValue', data.url)
+    emit('update:isOpen', false)
   } catch (error) {
     console.error(error)
     toast.error('上传失败')
