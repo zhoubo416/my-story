@@ -6,7 +6,8 @@ export default defineEventHandler(async () => {
   const pool = connectToDatabase()
 
   try {
-    const { rows } = pool.sql`SELECT * FROM user_info`
+    const { rows } = await pool.sql`SELECT * FROM user_info`
+    console.log(rows, 'result')
     return {
       success: true,
       data: rows || []

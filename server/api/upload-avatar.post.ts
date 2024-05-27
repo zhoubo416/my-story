@@ -1,7 +1,6 @@
 // server/api/upload-avatar.post.ts
 import type { IncomingMessage, ServerResponse } from 'http'
 import type { H3Event } from 'h3'
-import { useBody } from 'h3'
 import OSS from 'ali-oss'
 import multer from 'multer'
 import { ossConfig } from '../../oss.config'

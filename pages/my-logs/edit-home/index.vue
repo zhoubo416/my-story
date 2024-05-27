@@ -28,11 +28,19 @@ const goUploadAvatar = () => {
 onMounted(async () => {
   try {
     const { data } = await useFetch('/api/user-info')
-    console.log(data, 'data');
+    console.log(data, 'data')
   } catch (err) {
     // error.value = 'An error occurred while fetching data.'
+    console.error(err,'err')
   }
 })
+const saveLog = async () => {
+  console.log(hero.value, 'hero')
+  const { data } = await useFetch('/api/user-info', {
+    method: 'POST',
+    body: JSON.stringify(hero.value)
+  })
+}
 </script>
 
 <template>
@@ -54,7 +62,10 @@ onMounted(async () => {
           </div>
           <UModal v-model="isOpen">
             <div class="p-4">
-              <upload-file v-model="hero.avatar" />
+              <upload-file
+                v-model="hero.avatar"
+                v-model:isOpen="isOpen"
+              />
             </div>
           </UModal>
 
@@ -115,6 +126,13 @@ onMounted(async () => {
           </UPopover>
         </template>
       </UBlogPost>
+      <UButton
+        color="primary"
+        size="sm"
+        @click="saveLog"
+      >
+        保存
+      </UButton>
       <UButton
         class="fixed bottom-20 right-20"
         icon="i-heroicons-plus-circle-16-solid"
