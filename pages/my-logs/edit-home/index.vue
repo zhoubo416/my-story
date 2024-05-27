@@ -1,7 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { format } from 'date-fns'
+import { useDayjs } from '#dayjs'
 
+const dayjs = useDayjs()
+const ts = dayjs('2023-01-01').unix()
+const dataTs = dayjs(dayjs(ts)).format('DD/MM/YYYY')
+
+console.log(ts, dataTs, 'dayjs')
 const log = {
   title: '',
   description: '',
@@ -31,7 +37,7 @@ onMounted(async () => {
     console.log(data, 'data')
   } catch (err) {
     // error.value = 'An error occurred while fetching data.'
-    console.error(err,'err')
+    console.error(err, 'err')
   }
 })
 const saveLog = async () => {
