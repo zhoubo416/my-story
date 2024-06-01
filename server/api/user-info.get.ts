@@ -1,5 +1,6 @@
 // server/api/getUserInfo.get.ts
 import { defineEventHandler } from 'h3'
+
 import { connectToDatabase } from '../utils/db'
 
 export default defineEventHandler(async () => {
@@ -7,7 +8,6 @@ export default defineEventHandler(async () => {
 
   try {
     const { rows } = await pool.sql`SELECT * FROM user_info`
-    console.log(rows, 'result')
     return {
       success: true,
       data: rows || []

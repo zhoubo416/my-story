@@ -4,8 +4,8 @@ import { format } from 'date-fns'
 import { useDayjs } from '#dayjs'
 
 const dayjs = useDayjs()
-const ts = dayjs('2023-01-01').unix()
-const dataTs = dayjs(dayjs(ts)).format('DD/MM/YYYY')
+const ts = dayjs().valueOf()
+const dataTs = dayjs(ts).format('DD/MM/YYYY')
 
 console.log(ts, dataTs, 'dayjs')
 const log = {
@@ -33,7 +33,7 @@ const goUploadAvatar = () => {
 }
 onMounted(async () => {
   try {
-    const { data } = await useFetch('/api/user-info')
+    const { data } = await $fetch('/api/user-info')
     console.log(data, 'data')
   } catch (err) {
     // error.value = 'An error occurred while fetching data.'
