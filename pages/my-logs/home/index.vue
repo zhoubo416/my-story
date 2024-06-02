@@ -6,7 +6,14 @@
         title="Robin"
         description="A happy man."
         :links="[{ label: 'edit', color: 'white', to: '/my-logs/edit-home', target: '_blank', icon: 'i-mi-edit-alt' }]"
-      />
+      >
+        <template #icon>
+          <UAvatar
+            src="https://avatars.githubusercontent.com/u/739984?v=4"
+            alt="Avatar"
+          />
+        </template>
+      </UPageHeader>
       <UBlogPost
         class="mt-6"
         title="我十岁的时候"

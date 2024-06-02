@@ -1,76 +1,47 @@
-
 <script setup>
-const goPersionHome = () => {
-    navigateTo('/my-logs/home', {
-        external: true,
-        open: {
-            target: '_blank'
-        }
-    })
+import dayjs from 'dayjs'
+
+const goPersonHome = () => {
+  navigateTo('/my-logs/home', {
+    external: true,
+    open: {
+      target: '_blank'
+    }
+  })
 }
 
+const { data } = await useFetch('/api/user-info')
+console.log(data.value.data)
 
-
+const userList = ref(data.value.data?.map(it => ({ ...it, dt: dayjs(it.log_update_date || it.log_create_date).format('DD/MM YYYY') })))
 </script>
 
 <template>
-    <ULandingSection>
-        <div>
-            <UCard>
-                <div class="flex">
-                    <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar" />
-                    &nbsp;&nbsp;
-                    <span class="text-lg">Robin</span>
-                    <span class="text-xs">
-                        &nbsp;&nbsp;
-                        <UIcon name="i-ph-rocket-launch" dynamic /> 2024-12-12 01:01
-                    </span>
-                </div>
-                <UDivider class="mt-3 mb-5" />
-                <UContainer>
-                    <div>
-                        1 wo 来着山东
-                    </div>
-                    <div>
-                        2 Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server
-                        components, new composables...
-                    </div>
-                    <div>
-                        3 Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server
-                        components, new composables...
-                    </div>
-                </UContainer>
-
-                <UButton color="primary" variant="link" size="xs">全部>></UButton>
-            </UCard>
-            <UCard class="mt-5">
-                <div class="flex">
-                    <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar" />
-                    &nbsp;&nbsp;
-                    <span class="text-lg">Robin</span>
-                    <span class="text-xs">
-                        &nbsp;&nbsp;
-                        <UIcon name="i-ph-rocket-launch" dynamic /> 2024-12-12 01:01
-                    </span>
-                </div>
-                <UDivider class="mt-3 mb-5" />
-                <UContainer>
-                    <div>
-                        1 wo 来着山东
-                    </div>
-                    <div>
-                        2 Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server
-                        components, new composables...
-                    </div>
-                    <div>
-                        3 Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server
-                        components, new composables...
-                    </div>
-                </UContainer>
-
-                <UButton color="primary" variant="link" size="xs" @click="goPersionHome">全部>></UButton>
-            </UCard>
-        </div>
-
-    </ULandingSection>
+  <ULandingSection>
+    <div>
+      <UBlogPost
+        v-for="item in userList"
+        :key="item.id"
+        class="mb-6"
+        :title="item.log_title"
+        orientation="vertical"
+        :authors="[{ name: item.name, avatar: { src: item.avatar || '/images/star.jpg', target: '_blank' } }]"
+      >
+        <template #date>
+          {{ item.dt }}
+        </template>
+        <template #description>
+          {{ item.log_description }}
+          <UButton
+            color="primary"
+            variant="link"
+            size="xs"
+            @click="goPersonHome"
+          >
+            全部>>
+          </UButton>
+        </template>
+      </UBlogPost>
+    </div>
+  </ULandingSection>
 </template>

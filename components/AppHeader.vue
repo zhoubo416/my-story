@@ -20,7 +20,7 @@ const links = computed(() => [ {
 <template>
   <UHeader :links="links">
     <template #logo>
-      我们的故事
+      繁星
     </template>
 
     <template #panel>

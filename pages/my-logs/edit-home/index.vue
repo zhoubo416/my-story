@@ -1,13 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { format } from 'date-fns'
-import { useDayjs } from '#dayjs'
 
-const dayjs = useDayjs()
-const ts = dayjs().valueOf()
-const dataTs = dayjs(ts).format('DD/MM/YYYY')
-
-console.log(ts, dataTs, 'dayjs')
 const log = {
   title: '',
   description: '',
@@ -52,104 +46,106 @@ const saveLog = async () => {
 <template>
   <ULandingSection>
     <div>
-      <UPageHeader headline="个人主页">
-        <template #title>
-          <div
-            @click="goUploadAvatar"
-          >
-            <UAvatar
-              :src="hero.avatar"
-              alt="Avatar"
-            />
-            <UIcon
-              class="text-xs text-primary"
-              name="i-heroicons-pencil-square"
-            />
-          </div>
-          <UModal v-model="isOpen">
-            <div class="p-4">
-              <upload-file
-                v-model="hero.avatar"
-                v-model:isOpen="isOpen"
+      <ClientOnly>
+        <UPageHeader headline="个人主页">
+          <template #title>
+            <div
+              @click="goUploadAvatar"
+            >
+              <UAvatar
+                :src="hero.avatar"
+                alt="Avatar"
+              />
+              <UIcon
+                class="text-xs text-primary"
+                name="i-heroicons-pencil-square"
               />
             </div>
-          </UModal>
+            <UModal v-model="isOpen">
+              <div class="p-4">
+                <upload-file
+                  v-model="hero.avatar"
+                  v-model:isOpen="isOpen"
+                />
+              </div>
+            </UModal>
 
-          <UInput
-            v-model="hero.name"
-            placeholder="我的名字..."
-          />
-        </template>
-        <template #description>
-          <UTextarea
-            v-model="hero.description"
-            variant="none"
-            autoresize
-            resize
-            placeholder="我是谁..."
-          />
-        </template>
-      </UPageHeader>
-
-      <UBlogPost
-        v-for="(item, idx) in hero.logs"
-        :key="idx"
-        class="mt-6"
-        orientation="vertical"
-      >
-        <template #title>
-          <UInput
-            v-model="item.title"
-            variant="none"
-            placeholder="有件事情..."
-          />
-        </template>
-        <template #description>
-          <UTextarea
-            v-model="item.description"
-            variant="none"
-            autoresize
-            resize
-            placeholder="我想记下..."
-          />
-        </template>
-
-        <template #date>
-          <UPopover :popper="{ placement: 'bottom-start' }">
-            <UButton
-              icon="i-heroicons-calendar-days-20-solid"
-              color="primary"
-              :label="formatDate(item.date)"
-              size="2xs"
+            <UInput
+              v-model="hero.name"
+              placeholder="我的名字..."
             />
+          </template>
+          <template #description>
+            <UTextarea
+              v-model="hero.description"
+              variant="none"
+              autoresize
+              resize
+              placeholder="我是谁..."
+            />
+          </template>
+        </UPageHeader>
 
-            <template #panel="{ close }">
-              <DatePicker
-                v-model="item.date"
-                @close="close"
+        <UBlogPost
+          v-for="(item, idx) in hero.logs"
+          :key="idx"
+          class="mt-6"
+          orientation="vertical"
+        >
+          <template #title>
+            <UInput
+              v-model="item.title"
+              variant="none"
+              placeholder="有件事情..."
+            />
+          </template>
+          <template #description>
+            <UTextarea
+              v-model="item.description"
+              variant="none"
+              autoresize
+              resize
+              placeholder="我想记下..."
+            />
+          </template>
+
+          <template #date>
+            <UPopover :popper="{ placement: 'bottom-start' }">
+              <UButton
+                icon="i-heroicons-calendar-days-20-solid"
+                color="primary"
+                :label="formatDate(item.date)"
+                size="2xs"
               />
-            </template>
-          </UPopover>
-        </template>
-      </UBlogPost>
-      <UButton
-        color="primary"
-        size="sm"
-        @click="saveLog"
-      >
-        保存
-      </UButton>
-      <UButton
-        class="fixed bottom-20 right-20"
-        icon="i-heroicons-plus-circle-16-solid"
-        size="xl"
-        color="primary"
-        variant="link"
-        :trailing="false"
-        @click="addDefaultLog"
-      >
-        增加一条
-      </UButton>
+
+              <template #panel="{ close }">
+                <DatePicker
+                  v-model="item.date"
+                  @close="close"
+                />
+              </template>
+            </UPopover>
+          </template>
+        </UBlogPost>
+        <UButton
+          color="primary"
+          size="sm"
+          @click="saveLog"
+        >
+          保存
+        </UButton>
+        <UButton
+          class="fixed bottom-20 right-20"
+          icon="i-heroicons-plus-circle-16-solid"
+          size="xl"
+          color="primary"
+          variant="link"
+          :trailing="false"
+          @click="addDefaultLog"
+        >
+          增加一条
+        </UButton>
+      </ClientOnly>
     </div>
   </ULandingSection>
 </template>

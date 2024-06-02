@@ -13,8 +13,8 @@ export default defineEventHandler(async (event: H3Event) => {
 
   try {
     // 使用pool.query执行SQL插入命令
-    const values = [nanoid(), data.name, 3, data.avatar, dayjs().valueOf(), dayjs().valueOf()]
-    const result = await pool.query('INSERT INTO user_info (id,name,password,avatar,create_date,update_date) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id', values)
+    const values = [nanoid(), data.name, '111111', data.avatar, dayjs().valueOf(), data.description]
+    const result = await pool.query('INSERT INTO user_info (id,name,password,avatar,create_date,description) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id', values)
     console.log(result, 'result')
     return {
       success: true,
