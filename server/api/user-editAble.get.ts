@@ -9,9 +9,10 @@ export default defineEventHandler(async (event) => {
   try {
     const query = `select 1 from user_info where id = $1 and password = $2`
     const { rows } = await pool.query(query, [params.userId, params.password])
+    console.log(rows, params, 'rows')
     return {
       success: true,
-      data: !!rows
+      data: !!rows?.length
     }
   } catch (error) {
     console.error('Database query error:', error)
