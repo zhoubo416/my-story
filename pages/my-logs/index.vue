@@ -1,8 +1,12 @@
 <script setup>
 import dayjs from 'dayjs'
 
-const goPersonHome = () => {
-  navigateTo('/my-logs/home', {
+const goPersonHome = (user_id) => {
+  navigateTo({
+    path: '/my-logs/home',
+    query: {
+      user_id: user_id
+    } }, {
     external: true,
     open: {
       target: '_blank'
@@ -11,8 +15,6 @@ const goPersonHome = () => {
 }
 
 const { data } = await useFetch('/api/user-info')
-console.log(data.value.data)
-
 const userList = ref(data.value.data?.map(it => ({ ...it, dt: dayjs(it.log_update_date || it.log_create_date).format('DD/MM YYYY') })))
 </script>
 
@@ -21,7 +23,7 @@ const userList = ref(data.value.data?.map(it => ({ ...it, dt: dayjs(it.log_updat
     <div>
       <UBlogPost
         v-for="item in userList"
-        :key="item.id"
+        :key="item.user_id"
         class="mb-6"
         :title="item.log_title"
         orientation="vertical"
@@ -36,7 +38,7 @@ const userList = ref(data.value.data?.map(it => ({ ...it, dt: dayjs(it.log_updat
             color="primary"
             variant="link"
             size="xs"
-            @click="goPersonHome"
+            @click="goPersonHome(item.user_id)"
           >
             全部>>
           </UButton>

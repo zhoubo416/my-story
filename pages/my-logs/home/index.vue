@@ -1,49 +1,69 @@
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import dayjs from 'dayjs'
+
+const router = useRouter()?.currentRoute?.value
+const userId = router.query?.user_id
+const { data } = await useFetch('/api/user-logs', { query: { userId: userId } })
+const userInfo = ref(data.value.data.user)
+const logs = ref(data.value.data.logs)
+
+const isOpen = ref(false)
+const password = ref('')
+const goEdit = () => {
+  password.value = ''
+  isOpen.value = true
+}
+const validatePassword = () => {
+  console.log(password.value)
+  isOpen.value = false
+}
+</script>
+
 <template>
   <ULandingSection>
     <div>
       <UPageHeader
         headline="个人主页"
-        title="Robin"
-        description="A happy man."
-        :links="[{ label: 'edit', color: 'white', to: '/my-logs/edit-home', target: '_blank', icon: 'i-mi-edit-alt' }]"
+        :title="userInfo.name"
+        :description="userInfo.description"
+        :links="[{ label: 'edit', color: 'white', target: '_blank', icon: 'i-mi-edit-alt', click: goEdit }]"
       >
         <template #icon>
           <UAvatar
-            src="https://avatars.githubusercontent.com/u/739984?v=4"
+            :src="userInfo.avatar || '/images/star.jpg'"
             alt="Avatar"
           />
         </template>
       </UPageHeader>
       <UBlogPost
+        v-for="item in logs"
+        :key="item.id"
         class="mt-6"
-        title="我十岁的时候"
-        description="Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more."
-        date="Dec 25, 2023"
+        :title="item.title"
+        :description="item.description"
+        :date="dayjs(item.create_date).format('DD/MM YYYY')"
         orientation="vertical"
       />
-      <UBlogPost
-        class="mt-6"
-        title="我上初中的时候"
-        description="Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more."
-        date="Dec 25, 2023"
-        orientation="vertical"
-      />
-      <UBlogPost
-        class="mt-6"
-        title="我上初中的时候"
-        description="Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more.Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more."
-        date="Dec 25, 2023"
-        orientation="vertical"
-      >
-        <template #default>
-          <div>Dec 25, 2023</div>
-        </template>
-        <template #date>
-          <div class="text-gray-500 text-sm">
-            Dec 25, 2023
-          </div>
-        </template>
-      </UBlogPost>
     </div>
+
+    <UModal v-model="isOpen">
+      <div class="p-4 flex">
+        <UInput
+          v-model="password"
+          class="w-4/5"
+          type="password"
+          placeholder="请输入密码"
+        />
+        <UButton
+          color="primary"
+          class="ml-4"
+          size="xs"
+          label="确定"
+          @click="validatePassword"
+        />
+      </div>
+    </UModal>
   </ULandingSection>
 </template>
