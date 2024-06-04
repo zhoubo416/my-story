@@ -61,6 +61,10 @@ const saveLog = async () => {
                 name="i-heroicons-pencil-square"
               />
             </div>
+            <UInput
+              v-model="hero.name"
+              placeholder="我的名字..."
+            />
             <UModal v-model="isOpen">
               <div class="p-4">
                 <upload-file
@@ -69,11 +73,6 @@ const saveLog = async () => {
                 />
               </div>
             </UModal>
-
-            <UInput
-              v-model="hero.name"
-              placeholder="我的名字..."
-            />
           </template>
           <template #description>
             <UTextarea
