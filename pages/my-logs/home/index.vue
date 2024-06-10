@@ -48,7 +48,7 @@ const formatDate = (v) => {
   try {
     return dayjs(v).format('d MMM, YYYY')
   } catch (error) {
-    return dayjs().format('d MMM, YYYY')
+    return v
   }
 }
 
@@ -83,6 +83,9 @@ const log = {
 }
 const addDefaultLog = () => {
   logs.value.push({ ...log })
+}
+const deleteLog = (idx) => {
+  logs.value.splice(idx, 1)
 }
 </script>
 
@@ -154,7 +157,7 @@ const addDefaultLog = () => {
         class="mt-6"
         :title="item.title"
         :description="item.description"
-        :date="formatDate(item.date)"
+        :date="item.date"
         orientation="vertical"
       >
         <template
@@ -163,9 +166,19 @@ const addDefaultLog = () => {
         >
           <UInput
             v-model="item.title"
-            class="w-1/4"
+            class="w-1/4 inline-block"
             placeholder="标题"
             maxlength="128"
+          />
+          <UButton
+            v-if="editAble"
+            class="inline-block"
+            icon="i-heroicons-trash"
+            size="2xl"
+            color="red"
+            variant="link"
+            :trailing="false"
+            @click="deleteLog(idx)"
           />
         </template>
         <template
@@ -181,28 +194,9 @@ const addDefaultLog = () => {
             placeholder="内容..."
           />
         </template>
-        <template
-          v-if="editAble"
-          #date
-        >
-          <UPopover :popper="{ placement: 'bottom-start' }">
-            <UButton
-              icon="i-heroicons-calendar-days-20-solid"
-              color="primary"
-              :label="formatDate(item.date)"
-              size="2xs"
-            />
-
-            <template #panel="{ close }">
-              <DatePicker
-                v-model="item.date"
-                @close="close"
-              />
-            </template>
-          </UPopover>
-        </template>
       </UBlogPost>
       <UButton
+        v-if="editAble"
         icon="i-heroicons-plus-circle-16-solid"
         size="xl"
         color="primary"
